@@ -1,6 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, Image, ImageBackground, View, SafeAreaView } from 'react-native';
+import {
+  useFonts,
+  Eater_400Regular
+} from '@expo-google-fonts/eater';
 // import { Icon } from '@mdi/react';
 // import { mdiPumpkin, mdiCash, mdiKnife } from '@mdi/js';
 import ChooseButtons from './components/ChooseButtons.jsx';
@@ -8,6 +12,9 @@ import Stages from './components/Stages.jsx';
 import Winner from './components/Winner.jsx';
 
 export default function App(props) {
+  let [fontsLoaded] = useFonts({
+    Eater_400Regular,
+  });
 
   const [isNotStarted, setIsNotStarted] = useState(true);
   const [choice, setChoice] = useState(0);
@@ -19,9 +26,16 @@ export default function App(props) {
 
   useEffect(() => {
     choice !== 0 ? setIsNotStarted(false) : choice === 0 ? setIsNotStarted(true) : null;
+    if (choice === 0) {
+      setBoughtTool(false);
+      setMoneyLeft(50);
+      setIsWinner(false);
+      setIsLoser(false);
+    }
   }, [choice]);
 
   return (
+    (fontsLoaded &&
     <SafeAreaView style={styles.container}>
       {isNotStarted ?
         <>
@@ -44,11 +58,12 @@ export default function App(props) {
               <Text style={{ paddingTop: 10 }}>🎃</Text>
 
             </View>
-            <Stages />
+            <Stages setTool={setBoughtTool} money={moneyLeft} spend={setMoneyLeft}/>
           </SafeAreaView >
       }
       <StatusBar style="auto" />
     </SafeAreaView >
+    )
   );
 }
 // spendMoney={setMoneyLeft} addPumpkin={setHasPumpkin} addTool={setBoughtTool} won={setIsWinner} lose={setIsLoser}
@@ -63,6 +78,7 @@ const styles = StyleSheet.create({
   txt: {
     paddingTop: '40%',
     paddingBottom: 20,
+    fontFamily: 'Eater_400Regular',
     fontWeight: 'bold',
     fontSize: 30,
     color: 'green',

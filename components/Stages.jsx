@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Button, Image, View, ImageBackground } from 'react-native';
 //import { getStages, setupDatabaseAsync, setupStagesAsync } from './database.js';
+import TypeWriter from 'react-native-typewriter';
 import { Pages, Options } from './Pages.js';
 
-export default function Stages(props) {
+export default function Stages( {setTool, spend, money} ) {
   const [page, setPage] = useState('A');
 
   const [currentSituation, setCurrentSituation] = useState(Pages.filter((x) => x.pageId === 'A')[0]);
@@ -12,6 +13,10 @@ export default function Stages(props) {
 
   useEffect(() => {
     setCurrentSituation(Pages.filter((x) => x.pageId === `${page}`)[0]);
+    if(page === 'D') {
+      spend(money - 5);
+      setTool(true);
+    }
   }, [page]);
 
   useEffect(() => {
@@ -66,7 +71,9 @@ export default function Stages(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.txt}>{currentSituation.situation}</Text>
+      <View style={styles.container}>
+      <TypeWriter typing={1} fixed={true} style={styles.txt}>{currentSituation.situation}</TypeWriter>
+      </View>
       <Image source={currentSituation.url} style={styles.storyImg} />
       {options.map((option) => {
         return <Button
@@ -84,6 +91,7 @@ export default function Stages(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',

@@ -21,16 +21,30 @@ export const Pages = [
     isLoser: false
   },
   {
-    situation: 'You tuck $5 under the box and use the pen to log the sale.',
+    situation: 'You tuck $5 under the box and use the pen to log the sale.\nYou hear some autumn leaves crunch ahead in the distance, but it\'s too dark to pin-point where.',
     pageId: 'D',
     url: require('../assets/D.png'),
     isWinner: false,
     isLoser: false
   },
   {
-    situation: 'Maybe...',
+    situation: 'Maybe... ...yeah, maybe.',
     pageId: 'E',
     url: require('../assets/E.png'),
+    isWinner: false,
+    isLoser: false
+  },
+  {
+    situation: '',
+    pageId: 'F',
+    //url: require('../assets/F.png'),
+    isWinner: false,
+    isLoser: false
+  },
+  {
+    situation: '',
+    pageId: 'G',
+    //: require('../assets/G.png'),
     isWinner: false,
     isLoser: false
   },
@@ -84,8 +98,8 @@ export const Options = [
   { text: 'Is the arm really fake?', optionId: 'C2', step: 'E' },
   { text: 'Steal the pen.', optionId: 'C3', step: 'Y' },
 
-  { text: '', optionId: 'D1', step: ''},
-  { text: '', optionId: 'D2', step: '' },
+  { text: '"Hello?"', optionId: 'D1', step: 'F'},
+  { text: 'Run away and drop the heavy pumpkin for speed.', optionId: 'D2', step: 'G' },
 
   { text: 'Poke the "fake" arm.', optionId: 'E1', step: 'W' },
   { text: '', optionId: 'E2', step: '' },
