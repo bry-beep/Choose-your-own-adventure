@@ -15,6 +15,7 @@ export default function App(props) {
   const [boughtTool, setBoughtTool] = useState(false);
   const [hasPumpkin, setHasPumpkin] = useState(false);
   const [isWinner, setIsWinner] = useState(false);
+  const [isLoser, setIsLoser] = useState(false);
 
   useEffect(() => {
     choice !== 0 ? setIsNotStarted(false) : choice === 0 ? setIsNotStarted(true) : null;
@@ -35,18 +36,13 @@ export default function App(props) {
                 color='#000'
                 title='Restart'
                 accessibilityLabel="Learn more about this Restart button" />
-              <Button
-                // onPress={}
-                color='#000'
-                title='Inventory: '
-                accessibilityLabel="Learn more about this Inventory button" />
-              <Text style={{ paddingTop: 10 }}>💵 {moneyLeft}</Text>
+              <Text style={{ fontSize: 18, paddingTop: 7 }}>Inventory: 💵 {moneyLeft}</Text>
               {boughtTool &&
                 <Text style={{ paddingTop: 10 }}>🗡</Text>
               }
-              {hasPumpkin &&
-                <Text style={{ paddingTop: 10 }}>🎃</Text>
-              }
+
+              <Text style={{ paddingTop: 10 }}>🎃</Text>
+
             </View>
             <Stages />
           </SafeAreaView >
@@ -55,6 +51,7 @@ export default function App(props) {
     </SafeAreaView >
   );
 }
+// spendMoney={setMoneyLeft} addPumpkin={setHasPumpkin} addTool={setBoughtTool} won={setIsWinner} lose={setIsLoser}
 
 const styles = StyleSheet.create({
   container: {

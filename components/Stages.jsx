@@ -1,23 +1,79 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Button, Image, View } from 'react-native';
+import { StyleSheet, Text, Button, Image, View, ImageBackground } from 'react-native';
 //import { getStages, setupDatabaseAsync, setupStagesAsync } from './database.js';
+import { Pages, Options } from './Pages.js';
 
 export default function Stages(props) {
+  const [page, setPage] = useState('A');
 
-  const [currentSituation, setCurrentSituation] = useState(`It\'s ${new Date(Date.now()).toDateString()}. You just finished your Toy Problem and realize you ran out of pumpkins! You go to the local pumpkin patch. You find a nice pumpkin... but realize no one is around.`);
-  const [options, setOptions] = useState([{ text: 'Steal the pumpkin!', id: 1 }, { text: 'Yell out for someone.', id: 2 }, { text: 'Check out the sales stand.', id: 3 }]);
+  const [currentSituation, setCurrentSituation] = useState(Pages.filter((x) => x.pageId === 'A')[0]);
+  const [options, setOptions] = useState(Options.filter((x) => x.optionId.includes('A')));
+
+  useEffect(() => {
+    setCurrentSituation(Pages.filter((x) => x.pageId === `${page}`)[0]);
+  }, [page]);
+
+  useEffect(() => {
+    setOptions(Options.filter((x) => x.optionId.includes(`${page}`)));
+  }, [currentSituation]);
+
+  const setNewSituation = ((clickedOption) => {
+    switch (clickedOption) {
+      case 'A1' :
+        setPage('B');
+        break;
+      case 'A2' :
+        setPage('Z');
+        break;
+      case 'A3' :
+        setPage('C');
+        break;
+      case 'B1' :
+        setPage('X');
+        break;
+      case 'B2' :
+        setPage('Z');
+        break;
+      case 'B3' :
+        setPage('C');
+        break;
+      case 'C1' :
+        setPage('D');
+        break;
+      case 'C2' :
+        setPage('E');
+        break;
+      case 'C3' :
+        setPage('Y');
+        break;
+      case 'D1' :
+        setPage('');
+        break;
+      case 'D2' :
+        setPage('');
+        break;
+      case 'E1' :
+        setPage('W');
+        break;
+      case 'E2' :
+        setPage('');
+        break;
+
+      default: setPage('A');
+    }
+  });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.txt}>{currentSituation}</Text>
-      <Image style={styles.storyImg} source={require('../assets/pumpkinPatch.png')}></Image>
+      <Text style={styles.txt}>{currentSituation.situation}</Text>
+      <Image source={currentSituation.url} style={styles.storyImg} />
       {options.map((option) => {
         return <Button
-          onPress={() => setNewSituation(option.id)}
+          onPress={(event) => setNewSituation(option.optionId)}
           color='green'
           title={option.text}
-          key={option.id}
+          key={option.optionId}
           accessibilityLabel="Learn more about this button" />
       })
       }
@@ -34,6 +90,8 @@ const styles = StyleSheet.create({
   },
   txt: {
     color: 'green',
+    paddingLeft: 5,
+    paddingRight: 5,
     fontSize: 15,
     //fontFamily: 'spooky',
 
