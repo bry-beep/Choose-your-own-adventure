@@ -55,7 +55,7 @@ export const Pages = [
     isLoser: false
   },
   {
-    situation: 'You let out a pretty decent howl - you\'re cool, you feel cool. A quiet moment passes. *leaves crunch* In your peripheral, you catch the moonlight reflecting off a sets of wide, hungry eyes - whoops, you just called a warewolf!',
+    situation: 'You let out a pretty decent howl - you\'re cool, you feel cool. A quiet moment passes. *leaves crunch* In your peripheral, you catch the moonlight reflecting off a set of wide, hungry eyes - whoops, you just called a warewolf!',
     pageId: 'I',
     url: require('../assets/I.png'),
     isWinner: false,
