@@ -1,21 +1,50 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Button, Image, View, ImageBackground } from 'react-native';
+import { StyleSheet, Text, Button, Image, View, ImageBackground, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 //import { getStages, setupDatabaseAsync, setupStagesAsync } from './database.js';
 import TypeWriter from 'react-native-typewriter';
+const { height, width } = Dimensions.get('screen');
 import { Pages, Options } from './Pages.js';
+import Winner from './Winner.jsx';
+import {
+  useFonts,
+  ZillaSlab_400Regular,
+} from '@expo-google-fonts/zilla-slab'
 
-export default function Stages( {setTool, spend, money} ) {
+export default function Stages( {setTool, spend, money, lose, red, blue} ) {
+  let [fontsLoaded] = useFonts({
+    ZillaSlab_400Regular,
+  });
   const [page, setPage] = useState('A');
 
   const [currentSituation, setCurrentSituation] = useState(Pages.filter((x) => x.pageId === 'A')[0]);
   const [options, setOptions] = useState(Options.filter((x) => x.optionId.includes('A')));
+  const [isWinner, setIsWinner] = useState(false);
+
 
   useEffect(() => {
     setCurrentSituation(Pages.filter((x) => x.pageId === `${page}`)[0]);
     if(page === 'D') {
       spend(money - 5);
       setTool(true);
+    } else if (page === 'H') {
+      spend(money - 10);
+    } else if (page === 'K') {
+      red(true);
+      lose(true);
+    } else if (page === 'L') {
+      blue(true);
+    } else if (page === 'O') {
+      setIsWinner(true);
+    } else if(page === 'G' ||
+        page ==='N' ||
+        page ==='P' ||
+        page ==='Z' ||
+        page ==='X' ||
+        page ==='Y' ||
+        page ==='W'
+        ) {
+      lose(true);
     }
   }, [page]);
 
@@ -53,45 +82,80 @@ export default function Stages( {setTool, spend, money} ) {
         setPage('Y');
         break;
       case 'D1' :
-        setPage('');
+        setPage('G');
         break;
       case 'D2' :
-        setPage('');
+        setPage('H');
+        break;
+      case 'D3' :
+        setPage('I');
         break;
       case 'E1' :
         setPage('W');
         break;
       case 'E2' :
-        setPage('');
+        setPage('C');
         break;
-
+      case 'H1' :
+        setPage('J');
+        break;
+      // case 'H2' :
+      //   setPage('');
+      //   break;
+      case 'H3' :
+        setPage('M');
+        break;
+      case 'J1' :
+        setPage('K');
+        break;
+      case 'J2' :
+        setPage('L');
+        break;
+      case 'M1' :
+        setPage('N');
+        break;
+      case 'M2' :
+        setPage('N');
+        break;
+      case 'I1' :
+        setPage('O');
+        break;
+      case 'I2' :
+        setPage('P');
+        break;
       default: setPage('A');
     }
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.container}>
-      <TypeWriter typing={1} fixed={true} style={styles.txt}>{currentSituation.situation}</TypeWriter>
+    (fontsLoaded &&
+    <SafeAreaView style={styles.container}>
+      <View >
+      <TypeWriter typing={1} fixed={true} maxDelay={30} style={styles.txt}>{currentSituation.situation}</TypeWriter>
       </View>
+      {isWinner ?
+        <Winner /> :
+      <>
       <Image source={currentSituation.url} style={styles.storyImg} />
       {options.map((option) => {
-        return <Button
+        return <TouchableOpacity
+          style={styles.btn}
           onPress={(event) => setNewSituation(option.optionId)}
-          color='green'
-          title={option.text}
-          key={option.optionId}
-          accessibilityLabel="Learn more about this button" />
-      })
+          key={option.optionId}>
+          <Text style={styles.txt2} >{option.text}</Text>
+          </TouchableOpacity>
+      })}
+      </>
       }
-    </View>
+    </SafeAreaView>
+    )
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
+    width: Dimensions.get('window').width,
     backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
@@ -100,14 +164,27 @@ const styles = StyleSheet.create({
     color: 'green',
     paddingLeft: 5,
     paddingRight: 5,
-    fontSize: 15,
-    //fontFamily: 'spooky',
-
+    fontSize: 18,
+    fontFamily: 'ZillaSlab_400Regular',
+  },
+  txt2: {
+    color: 'black',
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 18,
+    fontFamily: 'ZillaSlab_400Regular',
   },
   storyImg: {
     height: '60%',
-    width: '100%',
+    width: Dimensions.get('window').width,
+    alignSelf: 'stretch',
     aspectRatio: 1,
+  },
+  btn: {
+    backgroundColor: 'orange',
+    borderRadius: 10,
+    padding:10,
+    margin: 2,
   }
 
 });

@@ -9,7 +9,7 @@ export default function ChooseButtons({ onChoose }) {
         <Button
           onPress={() => onChoose(1)}
           color= '#000'
-          title='Trick'
+          title='TRICK'
           accessibilityLabel="Learn more about this button"/>
       </View>
       <View style={styles.btn}>
@@ -23,7 +23,7 @@ export default function ChooseButtons({ onChoose }) {
         <Button
           onPress={() => onChoose(3)}
           color= '#000'
-          title='Treat'
+          title='TREAT'
           accessibilityLabel="Learn more about this button"/>
       </View>
     </View>
@@ -32,7 +32,7 @@ export default function ChooseButtons({ onChoose }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     borderRadius: 10,
+    height: '12%',
   },
   btn: {
     backgroundColor: 'orange',

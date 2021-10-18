@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Button, Image, ImageBackground, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, Button, TouchableOpacity, Image, ImageBackground, View, SafeAreaView } from 'react-native';
 import {
   useFonts,
   Eater_400Regular
@@ -9,7 +9,6 @@ import {
 // import { mdiPumpkin, mdiCash, mdiKnife } from '@mdi/js';
 import ChooseButtons from './components/ChooseButtons.jsx';
 import Stages from './components/Stages.jsx';
-import Winner from './components/Winner.jsx';
 
 export default function App(props) {
   let [fontsLoaded] = useFonts({
@@ -20,17 +19,19 @@ export default function App(props) {
   const [choice, setChoice] = useState(0);
   const [moneyLeft, setMoneyLeft] = useState(50);
   const [boughtTool, setBoughtTool] = useState(false);
+  const [choseRed, setChoseRed] = useState(false);
+  const [choseBlue, setChoseBlue] = useState(false);
   const [hasPumpkin, setHasPumpkin] = useState(false);
-  const [isWinner, setIsWinner] = useState(false);
   const [isLoser, setIsLoser] = useState(false);
 
   useEffect(() => {
     choice !== 0 ? setIsNotStarted(false) : choice === 0 ? setIsNotStarted(true) : null;
     if (choice === 0) {
+      setIsLoser(false);
       setBoughtTool(false);
       setMoneyLeft(50);
-      setIsWinner(false);
-      setIsLoser(false);
+      setChoseRed(false);
+      setChoseBlue(false);
     }
   }, [choice]);
 
@@ -41,24 +42,28 @@ export default function App(props) {
         <>
           <Text style={styles.txt}>CHOOSE CAREFULLY</Text>
           <ChooseButtons onChoose={setChoice}></ChooseButtons>
-        </> : isWinner ?
-          <Winner ></Winner> :
+        </> :
           <SafeAreaView>
             <View style={styles.btn}>
-              <Button
-                onPress={() => setChoice(0)}
-                color='#000'
-                title='Restart'
-                accessibilityLabel="Learn more about this Restart button" />
-              <Text style={{ fontSize: 18, paddingTop: 7 }}>Inventory: 💵 {moneyLeft}</Text>
-              {boughtTool &&
+              <TouchableOpacity
+                onPress={() => setChoice(0)}>
+                <Text style={{ fontSize: 16, paddingTop: 3, fontFamily: 'Eater_400Regular' }}>Restart</Text>
+              </TouchableOpacity>
+              <Text style={{ fontSize: 16, paddingTop: 3, fontFamily: 'Eater_400Regular' }}>Inventory: 💵 {moneyLeft}</Text>
+              {(boughtTool && !isLoser) &&
                 <Text style={{ paddingTop: 10 }}>🗡</Text>
               }
-
-              <Text style={{ paddingTop: 10 }}>🎃</Text>
-
+              {choseRed ?
+                <Text style={{ paddingTop: 10 }}>🍎</Text> :
+                choseBlue ?
+                <Text style={{ paddingTop: 10 }}>🫐</Text> :
+                null
+              }
+              {!isLoser &&
+                <Text style={{ paddingTop: 10 }}>🎃</Text>
+              }
             </View>
-            <Stages setTool={setBoughtTool} money={moneyLeft} spend={setMoneyLeft}/>
+            <Stages setTool={setBoughtTool} money={moneyLeft} spend={setMoneyLeft} lose={setIsLoser} red={setChoseRed} blue={setChoseBlue} />
           </SafeAreaView >
       }
       <StatusBar style="auto" />
@@ -76,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   txt: {
-    paddingTop: '40%',
+    paddingTop: 35,
     paddingBottom: 20,
     fontFamily: 'Eater_400Regular',
     fontWeight: 'bold',
@@ -92,6 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingRight: 15,
     paddingLeft: 15,
+    fontFamily: 'Eater_400Regular',
   }
   // splash: {
   //   image: './assets/splash.png',
