@@ -10,5 +10,5 @@ To simulate via Expo:\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run npm install\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;run expo start\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go to the generated localhost address as shown in your terminal\
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;click Run on Simulator on the left hand side and click your way through the game\
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;click Run on Simulator on the left hand side and click on the simulated phone\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enjoy!
