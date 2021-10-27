@@ -99,9 +99,4 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     fontFamily: 'Eater_400Regular',
   }
-  // splash: {
-  //   image: './assets/splash.png',
-  //   resizeMode: 'contain',
-  //   backgroundColor: '#000000'
-  // },
 });

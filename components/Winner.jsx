@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from '@env';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 

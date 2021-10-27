@@ -131,7 +131,7 @@ export default function Stages( {setTool, spend, money, lose, red, blue} ) {
     (fontsLoaded &&
     <SafeAreaView style={styles.container}>
       <View >
-      <TypeWriter typing={1} fixed={true} maxDelay={30} style={styles.txt}>{currentSituation.situation}</TypeWriter>
+      <TypeWriter typing={1} fixed={true} maxDelay={10} style={styles.txt}>{currentSituation.situation}</TypeWriter>
       </View>
       {isWinner ?
         <Winner /> :
